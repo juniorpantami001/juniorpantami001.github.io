@@ -4,7 +4,26 @@ const navMenu = document.querySelector('.nav-menu');
 const navLinks = document.querySelectorAll('.nav-link');
 const backToTopBtn = document.querySelector('.back-to-top');
 const currentYear = document.getElementById('currentYear');
+// Profile image loading and fallback
+const profileImage = document.querySelector('.profile-image');
 
+if (profileImage) {
+    profileImage.addEventListener('error', function() {
+        // If image fails to load, show initials fallback
+        this.style.display = 'none';
+        const container = this.closest('.image-container');
+        if (container) {
+            container.classList.add('fallback-active');
+        }
+    });
+    
+    // Preload image for smooth loading
+    const img = new Image();
+    img.src = profileImage.src;
+    img.onload = function() {
+        profileImage.classList.add('loaded');
+    };
+}
 // Mobile Menu Toggle
 mobileMenuBtn.addEventListener('click', () => {
     navMenu.classList.toggle('active');
